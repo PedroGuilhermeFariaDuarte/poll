@@ -6,6 +6,7 @@ import { IBaseHTTPMethods } from "@app/types";
 
 // Services
 import { PollService } from "@app/modules/Poll/services";
+import { SocketStream } from "@fastify/websocket";
 import { ZodError } from "zod";
 
 export class PollController implements IBaseHTTPMethods {
@@ -85,7 +86,7 @@ export class PollController implements IBaseHTTPMethods {
         }
     }
 
-     async vote(request: FastifyRequest, response: FastifyReply){
+    async vote(request: FastifyRequest, response: FastifyReply){
         try {
             const dataService = await this.#service.vote(request,response)
 
@@ -100,6 +101,14 @@ export class PollController implements IBaseHTTPMethods {
                 message: errorMessage || 'Something are wrong, try again',
                 data: error
             })
+        }
+    }
+
+    async results(connection: SocketStream, request: FastifyRequest){
+        try {
+            this.#service.results(connection,request)
+        } catch (error) {
+            throw error
         }
     }
 } 

@@ -11,10 +11,7 @@ CREATE TABLE "votes" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "votes_sessionId_key" ON "votes"("sessionId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "votes_pollId_key" ON "votes"("pollId");
+CREATE UNIQUE INDEX "votes_sessionId_pollId_key" ON "votes"("sessionId", "pollId");
 
 -- AddForeignKey
 ALTER TABLE "votes" ADD CONSTRAINT "votes_pollOptionId_fkey" FOREIGN KEY ("pollOptionId") REFERENCES "poll_options"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

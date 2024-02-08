@@ -1,8 +1,9 @@
 import fastifyCookie from "@fastify/cookie";
+import fastifyWebsocket from "@fastify/websocket";
 import Fastify from "fastify";
 
 // Routes
-import { pollCreateRoute, pollDeleteRoute, pollIndexRoute, pollShowRoute, pollUpdateRoute, pollVoteRoute } from "routes/polls";
+import { pollCreateRoute, pollDeleteRoute, pollIndexRoute, pollResultsRoute, pollShowRoute, pollUpdateRoute, pollVoteRoute } from "routes/polls";
 
 const machine = Fastify({
     caseSensitive: true,
@@ -10,6 +11,9 @@ const machine = Fastify({
         timestamp: true
     },
 })
+
+// Rgister WS Protocol
+machine.register(fastifyWebsocket)
 
 // Register HTTP Cookies Handler
 machine.register(fastifyCookie, {
@@ -22,6 +26,7 @@ machine.register(pollCreateRoute)
 machine.register(pollDeleteRoute)
 machine.register(pollIndexRoute)
 machine.register(pollShowRoute)
+machine.register(pollResultsRoute)
 machine.register(pollUpdateRoute)
 machine.register(pollVoteRoute)
 

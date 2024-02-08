@@ -87,6 +87,29 @@ export async function pollShowRoute(server: FastifyInstance | null = null){
     }
 }
 
+export async function pollResultsRoute(server: FastifyInstance | null = null){
+    try {
+        if(!server) return;
+
+        server.get('/poll/results/:id',{
+            schema: {
+                querystring: {
+                    type: 'object',
+                    properties: {
+                        id: {
+                            type: 'string'
+                        }
+                    }
+                }
+            },
+            websocket: true,
+        }, (...rest) => pollController.results.apply(pollController, rest))
+        
+    } catch (error) {
+        throw error
+    }
+}
+
 export async function pollDeleteRoute(server: FastifyInstance | null = null){
     try {
         if(!server) return;
